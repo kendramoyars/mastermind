@@ -25,12 +25,14 @@ module Mastermind
     def initialize
       @num_tries = ""
       @guess_input = ""
-      @code = [1,2,3,4]
+      @code = 4.times.map{Random.rand(6)}
       @guess = ""
       @guess_display = [" ", " ", " ", " "]
       @feedback = [" ", " ", " ", " "]
       @board = Board.new(guess_display, feedback)
     end
+
+ 
 
     def play
       puts ""
@@ -58,21 +60,23 @@ module Mastermind
       verify_input
     end
 
+    def input_error_message
+      puts "Enter a 4 digit number, with each of the numbers being between 1-6."
+      puts ""
+      get_input
+    end
+
     def verify_input
       @guess = guess_input.split(//)
       if guess.length == 4
         guess.each do |num|
           if num.to_i <= 1 && num.to_i >= 6 
-            puts "Enter a 4 digit number, with each of the numbers being between 1-6."
-            puts ""
-            get_input
+            input_error_message
           end
         end
         check_guess
       else
-        puts "Enter a 4 digit number, with each of the numbers being between 1-6."
-        puts ""
-        get_input
+        input_error_message
       end
     end
 
